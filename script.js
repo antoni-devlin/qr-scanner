@@ -4,6 +4,27 @@ let isUrl = new RegExp(
   "https?://(www.)?[-a-zA-Z0-9@:%._+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)"
 );
 
+function currentDateTime() {
+  let now = new Date();
+  return `${now.getDate()}/${
+    now.getMonth() + 1
+  }/${now.getFullYear()}, ${now.getHours()}:${now.getMinutes()}}`;
+}
+
+throw "";
+
+// let history = [];
+
+// // INIT LOCALSTORAGE
+// window.addEventListener("load", (e) => {
+//   if (localStorage.getItem("history")) {
+//     history = JSON.parse(localStorage.getItem("history"));
+//   } else {
+//     // If tasks array is empty, recreate the tasks array (catches a missing array as well)
+//     localStorage.setItem("tasks", JSON.stringify([]));
+//   }
+// });
+
 // Function to validate urls
 function isValidHttpUrl(string) {
   let url;
