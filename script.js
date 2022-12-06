@@ -6,12 +6,8 @@ let isUrl = new RegExp(
 
 function currentDateTime() {
   let now = new Date();
-  return `${now.getDate()}/${
-    now.getMonth() + 1
-  }/${now.getFullYear()}, ${now.getHours()}:${now.getMinutes()}}`;
+  return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}, ${now.getHours()}:${now.getMinutes()}`;
 }
-
-throw "";
 
 // let history = [];
 
@@ -85,6 +81,7 @@ const detectCode = () => {
           // Log detected barcode to the console
           console.log(barcode.rawValue);
           output.innerText = barcode.rawValue;
+          window.alert(barcode.rawValue);
           // Check if barcode value is a url
           if (isValidHttpUrl(barcode.rawValue)) {
             output.innerHTML = `Code value: <a href='${barcode.rawValue}'>${barcode.rawValue}<a>.`;
@@ -101,4 +98,4 @@ const detectCode = () => {
 };
 
 // Run detect function every 100 milliseconds
-setInterval(detectCode, 100);
+setInterval(detectCode, 1000);
