@@ -18,12 +18,12 @@ function isValidHttpUrl(string) {
 // Detect whether the current browser supports barcode detection, and let the user know.
 let supportMessage = document.getElementById("support-message");
 
-if (!("BarcodeDetector" in window)) {
-  supportMessage.innerText =
-    "This device/browser does not support barcode detection.";
-} else {
-  console.log("Barcode detection supported!");
-}
+// if (!("BarcodeDetector" in window)) {
+//   supportMessage.innerText =
+//     "This device/browser does not support barcode detection.";
+// } else {
+//   console.log("Barcode detection supported!");
+// }
 
 // CREATE THE VIDEO STREAM
 
@@ -57,9 +57,7 @@ const detectCode = () => {
     .detect(video)
     .then((codes) => {
       //   If no codes detected, exit function
-      if (codes.length === 0) {
-        return;
-      } else {
+      if (codes) {
         for (const barcode of codes) {
           // Log detected barcode to the console
           console.log(barcode.rawValue);
@@ -81,3 +79,10 @@ const detectCode = () => {
 
 // Run detect function every 100 milliseconds
 setInterval(detectCode, 100);
+
+// function movediv(timestamp){
+//     leftpos += 5
+//     adiv.style.left = leftpos + 'px'
+//     requestAnimationFrame(movediv) // call requestAnimationFrame again to animate next frame
+// }
+// requestAnimationFrame(movediv) // call requestAnimationFrame and pass into it animation function
