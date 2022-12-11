@@ -51,7 +51,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 const barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] });
 
 // Detect barcode function
-const detectCode = () => {
+function detectCode(timestamp) {
   //   Start detecting codes in the video element
   barcodeDetector
     .detect(video)
@@ -75,10 +75,11 @@ const detectCode = () => {
       //     Log any errors
       console.error(err);
     });
-};
-
-// Run detect function every 100 milliseconds
-setInterval(detectCode, 100);
+  requestAnimationFrame(detectCode);
+}
+requestAnimationFrame(detectCode);
+// // Run detect function every 100 milliseconds
+// setInterval(detectCode, 100);
 
 // function movediv(timestamp){
 //     leftpos += 5
