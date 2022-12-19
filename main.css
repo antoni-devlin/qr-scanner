@@ -1,3 +1,8 @@
+body {
+	background-color: rgb(255, 202, 206);
+	font-family: helvetica;
+}
+
 main {
 	width: 100%;
 }
@@ -6,4 +11,19 @@ video {
 	max-width: 350px;
 	display: block;
 	margin: 0 auto;
+	border-radius: 10px;
+}
+
+#output {
+	max-width: 80%;
+	font-size: 20px;
+	/* padding-left: 20px; */
+	margin: 10px auto;
+	padding: 10px;
+	background: rgba(198, 133, 255, 0.5);
+	border-radius: 5px;
+}
+
+.hidden {
+	display: none;
 }

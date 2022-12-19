@@ -45,7 +45,6 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 
 // BARCODE SCANNING
-
 // Create new instance of barcodeDetector class
 
 const barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] });
@@ -58,13 +57,14 @@ function detectCode(timestamp) {
     .then((codes) => {
       //   If no codes detected, exit function
       if (codes) {
+        output.classList.remove("hidden");
         for (const barcode of codes) {
           // Log detected barcode to the console
           console.log(barcode.rawValue);
           output.innerText = barcode.rawValue;
           // Check if barcode value is a url
           if (isValidHttpUrl(barcode.rawValue)) {
-            output.innerHTML = `Code value: <a href='${barcode.rawValue}'>${barcode.rawValue}<a>.`;
+            output.innerHTML = `<a href='${barcode.rawValue}'>${barcode.rawValue}<a>.`;
           } else {
             output.innerText = `Code value: ${barcode.rawValue}`;
           }
@@ -78,12 +78,3 @@ function detectCode(timestamp) {
   requestAnimationFrame(detectCode);
 }
 requestAnimationFrame(detectCode);
-// // Run detect function every 100 milliseconds
-// setInterval(detectCode, 100);
-
-// function movediv(timestamp){
-//     leftpos += 5
-//     adiv.style.left = leftpos + 'px'
-//     requestAnimationFrame(movediv) // call requestAnimationFrame again to animate next frame
-// }
-// requestAnimationFrame(movediv) // call requestAnimationFrame and pass into it animation function
