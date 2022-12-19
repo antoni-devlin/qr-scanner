@@ -3,10 +3,6 @@ body {
 	font-family: helvetica;
 }
 
-main {
-	width: 100%;
-}
-
 video {
 	max-width: 350px;
 	display: block;
@@ -26,4 +22,37 @@ video {
 
 .hidden {
 	display: none;
+}
+
+/* Modal styles */
+html {
+	font-family: Arial, sans-serif;
+	overflow: hidden;
+}
+
+#scans-heading {
+	text-align: center;
+	font-size: 20px;
+}
+
+#modal {
+	position: absolute;
+	background-color: rgba(255, 150, 150, 1);
+	width: 350px;
+	max-width: 80vw;
+	border-radius: 20px 20px 0 0;
+	padding: 10px;
+	bottom: -540px;
+	transition: bottom 0.2s ease-out;
+	margin: 0 auto;
+	left: calc(50vw - 175px);
+	height: 70vh;
+}
+
+.show {
+	bottom: 0;
+}
+
+#past-scans {
+	list-style: none;
 }
