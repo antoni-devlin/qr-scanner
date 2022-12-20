@@ -50,24 +50,19 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 const barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] });
 
 // Detect barcode function
-function detectCode(timestamp) {
+function detectCode() {
   //   Start detecting codes in the video element
   barcodeDetector
     .detect(video)
     .then((codes) => {
-      //   If no codes detected, exit function
+      //   If a code is detected
       if (codes) {
         output.classList.remove("hidden");
         for (const barcode of codes) {
-          // Log detected barcode to the console
-          console.log(barcode.rawValue);
-          output.innerText = barcode.rawValue;
           // Check if barcode value is a url
-          if (isValidHttpUrl(barcode.rawValue)) {
-            output.innerHTML = `<a href='${barcode.rawValue}'>${barcode.rawValue}<a>.`;
-          } else {
-            output.innerText = `Code value: ${barcode.rawValue}`;
-          }
+          output.innerHTML = formatBarcodeString(barcode);
+
+          saveToHistory(barcode);
         }
       }
     })
@@ -78,3 +73,77 @@ function detectCode(timestamp) {
   requestAnimationFrame(detectCode);
 }
 requestAnimationFrame(detectCode);
+
+// Modal logic
+let bodyEl = document.getElementsByTagName("body")[0];
+let pastScans = document.getElementById("past-scans");
+
+const modal = {
+  el: document.getElementById("modal"),
+  show: function () {
+    this.el.style.bottom = "0";
+    return (this.visible = true);
+  },
+  hide: function () {
+    this.el.style.bottom = "-540px";
+    return (this.visible = false);
+  },
+  visible: false,
+};
+
+function saveToHistory(barcode) {
+  let pastScanList = document.getElementById("past-scans");
+  let newListItem = document.createElement("li");
+  let latestItem = pastScanList.firstChild;
+  newListItem.innerHTML = `${formatBarcodeString(barcode)} - ${getTimestamp()}`;
+
+  pastScanList.insertBefore(newListItem, latestItem);
+}
+
+function formatBarcodeString(barcode) {
+  let formattedBarcodeData;
+  if (isValidHttpUrl(barcode.rawValue)) {
+    formattedBarcodeData = `<a href='${barcode.rawValue}'>${barcode.rawValue}<a>.`;
+  } else {
+    formattedBarcodeData = `${barcode.rawValue}`;
+  }
+  return formattedBarcodeData;
+}
+
+function isDescendant(el, parentId) {
+  let isChild = false;
+  if (el.id === parentId) {
+    isChild = true;
+  }
+
+  while ((el = el.parentNode)) {
+    if (el.id == parentId) {
+      isChild = true;
+    }
+  }
+
+  return isChild;
+}
+
+// Show history modal when clicking on modal
+document.addEventListener("click", (e) => {
+  if (!modal.visible && isDescendant(e.target, modal.el.id)) {
+    modal.show();
+  }
+});
+
+// Hide history modal on click outside the modal
+document.addEventListener("click", (e) => {
+  if (modal.visible && !isDescendant(e.target, modal.el.id)) {
+    modal.hide();
+  }
+});
+
+function getTimestamp() {
+  let now = new Date();
+  let date = new Date().toLocaleDateString().padStart(10, "0");
+  let time = new Date().toLocaleTimeString();
+
+  let timestamp = `${date}, ${time}`;
+  return timestamp;
+}
